@@ -1,0 +1,172 @@
+[
+  {
+    "isHeader": true,
+    "text": "Program & การใช้งานระบบ",
+    "value": "Program & การใช้งานระบบ"
+  },
+  {
+    "isHeader": false,
+    "text": "Bplus-บันทึก/แก้ไขเอกสาร",
+    "value": "Bplus-บันทึก/แก้ไขเอกสาร"
+  },
+  {
+    "isHeader": false,
+    "text": "Bplus-ตรวจสอบ/เรียกรายงาน",
+    "value": "Bplus-ตรวจสอบ/เรียกรายงาน"
+  },
+  {
+    "isHeader": false,
+    "text": "Bplus-อัปเดตแก้ไข Master",
+    "value": "Bplus-อัปเดตแก้ไข Master"
+  },
+  {
+    "isHeader": false,
+    "text": "Bplus-อัปเดต/วางฟอร์มรายงาน",
+    "value": "Bplus-อัปเดต/วางฟอร์มรายงาน"
+  },
+  {
+    "isHeader": false,
+    "text": "Delete Di-ลบบิลฝัง",
+    "value": "Delete Di-ลบบิลฝัง"
+  },
+  {
+    "isHeader": false,
+    "text": "UpdSQL-เปลี่ยนเลขที่เอกสาร",
+    "value": "UpdSQL-เปลี่ยนเลขที่เอกสาร"
+  },
+  {
+    "isHeader": false,
+    "text": "TBF Countstock-นำเข้าใบตรวจนับ",
+    "value": "TBF Countstock-นำเข้าใบตรวจนับ"
+  },
+    {
+    "isHeader": false,
+    "text": "Crystal Report-แก้ไขรายงาน",
+    "value": "Crystal Report-แก้ไขรายงาน"
+  },
+  {
+  "isHeader": false,
+    "text": "Flow",
+    "value": "Flow"
+  },
+  {
+    "isHeader": false,
+    "text": "SFA-ระบบงานรถเร่",
+    "value": "SFA-ระบบงานรถเร่"
+  },
+  {
+    "isHeader": false,
+    "text": "DI",
+    "value": "DI"
+  },
+ {
+    "isHeader": false,
+    "text": "Power BI",
+    "value": "Power BI"
+  },
+ {
+    "isHeader": false,
+    "text": "MS Office",
+    "value": "MS Office"
+  },
+  {
+    "isHeader": false,
+    "text": "โอนSync D",
+    "value": "โอนSync D"
+  },
+  {
+    "isHeader": false,
+    "text": "จัดเตรียมข้อมูลยกยอด DataBase",
+    "value": "จัดเตรียมข้อมูลยกยอด DataBase"
+  },
+    {
+    "isHeader": false,
+    "text": "อื่นๆ",
+    "value": "อื่นๆ"
+  },
+  {
+    "isHeader": true,
+    "text": "Operation",
+    "value": "Operation"
+  },
+  {
+    "isHeader": false,
+    "text": "Support/Remote ให้คำแนะนำ-ปรึกษา",
+    "value": "Support/Remote ให้คำแนะนำ-ปรึกษา"
+  },
+    {
+    "isHeader": false,
+    "text": "Support/Remote แก้ไขปัญหา",
+    "value": "Support/Remote แก้ไขปัญหา"
+  },
+  {
+    "isHeader": false,
+    "text": "ติดต่อประสานงาน",
+    "value": "ติดต่อประสานงาน"
+  },
+  {
+    "isHeader": false,
+    "text": "ตรวจสอบ/ติดตาม/รายงานเคสทุจริต",
+    "value": "ตรวจสอบ/ติดตาม/รายงานเคสทุจริต"
+  },
+  {
+    "isHeader": false,
+    "text": "ติดตามงานที่อยู่ระหว่างดำเนินการ",
+    "value": "ติดตามงานที่อยู่ระหว่างดำเนินการ"
+  },
+  {
+    "isHeader": false,
+    "text": "จัดทำ/สรุปงานประจำเดือน",
+    "value": "จัดทำ/สรุปงานประจำเดือน"
+  },
+  {
+    "isHeader": false,
+    "text": "ลงพื้นที่",
+    "value": "ลงพื้นที่"
+  },
+  {
+    "isHeader": false,
+    "text": "Zoom / ประชุม",
+    "value": "Zoom / ประชุม"
+  },
+  {
+    "isHeader": false,
+    "text": "KPI / IDP / Project",
+    "value": "KPI / IDP / Project"
+  },
+  {
+    "isHeader": false,
+    "text": "My Learning เรียนรู้หลักสูตรออนไลน์",
+    "value": "My Learning เรียนรู้หลักสูตรออนไลน์"
+  },
+    {
+    "isHeader": false,
+    "text": "งานอื่นที่ได้รับมอบหมาย",
+    "value": "งานอื่นที่ได้รับมอบหมาย"
+  },
+  {
+    "isHeader": true,
+    "text": "ผลักดันงานทีมภาษี",
+    "value": "ผลักดันงานทีมภาษี"
+  },
+  {
+    "isHeader": false,
+    "text": "Remote-สอนงาน เอเย่นต์ / แอดมิน",
+    "value": "Remote-สอนงาน เอเย่นต์ / แอดมิน"
+  },
+  {
+    "isHeader": false,
+    "text": "Remote-สอนงาน สนง.บัญชี",
+    "value": "Remote-สอนงาน สนง.บัญชี"
+  },
+  {
+    "isHeader": false,
+    "text": "จัดเก็บเอกสารส่งคืน-เอเย่นต์",
+    "value": "จัดเก็บเอกสารส่งคืน-เอเย่นต์"
+  },
+  {
+    "isHeader": false,
+    "text": "จัดเก็บเอกสารส่งมอบ-สนง.บัญชี",
+    "value": "จัดเก็บเอกสารส่งมอบ-สนง.บัญชี"
+  }
+]
