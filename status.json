@@ -1,0 +1,6 @@
+[
+  {"value": "Complete", "text": "สำเร็จ"},
+  {"value": "InProgress", "text": "กำลังดำเนินการ"},
+  {"value": "Pending", "text": "รอข้อมูล"},
+  {"value": "Escalated", "text": "ส่งต่อผู้เชี่ยวชาญ"}
+]

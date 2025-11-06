@@ -212,15 +212,22 @@
             <div class="space-y-8">
                 
                 <div class="pt-0">
-                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                        รายละเอียดงาน
-                        <span class="text-accent-sunset text-base ml-2">*</span>
-                    </h3>
-                    
+                    <div class="flex justify-between items-center mb-4">
+                         <h3 class="text-lg font-bold text-gray-800 flex items-center">
+                            รายละเอียดงาน
+                            <span class="text-accent-sunset text-base ml-2">*</span>
+                         </h3>
+                         <p class="text-right text-s font-medium text-red-500 flex items-center flex-shrink-0 ml-4">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-accent-sunset" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.542 2.705-1.542 3.47 0l5.58 11.25A1.5 1.5 0 0116.035 17H3.964a1.5 1.5 0 01-1.359-2.651l5.58-11.25zM10 10a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm0-4a1 1 0 00-1 1v1a1 1 0 102 0V7a1 1 0 00-1-1z" clip-rule="evenodd" />
+                             </svg>
+                             ถ้าในแต่ละหัวข้องาน มีผู้เชี่ยวชาญให้คำแนะนำ ให้ระบุในคอลัมภ์ที่ปรึกษา
+                         </p>
+                    </div>
                     <div> 
                         <table class="w-full log-table">
                             <colgroup>
-                                <col style="width: 1.5%;">     <col style="width: 12%;">    <col style="width: 10%;">    <col style="width: 14%;">    <col style="width: 18%;">    <col style="width: 7%;">     <col style="width: 12%;">    <col style="width: 8%;">     <col style="width: 16%;">  <col style="width: 16%;">   </colgroup>
+                                <col style="width: 2%;">     <col style="width: 15%;">    <col style="width: 15%;">    <col style="width: 14%;">    <col style="width: 19%;">    <col style="width: 13%;">    <col style="width: 9%;">     <col style="width: 9%;">     <col style="width: 10%;">     <col style="width: 13%;">    <col style="width: 7%;"> </colgroup>
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -228,19 +235,18 @@
                                     <th>Agent</th> 
                                     <th>หัวข้องาน</th>
                                     <th>รายละเอียดงาน</th>
-                                    <th>ระยะเวลา(ชม.)</th> 
-                                    <th>ผลการติดตาม<br>ตรวจสอบ</th>
-                                    <th>สถานะ</th>
                                     <th>ปัญหาที่พบ (ถ้ามี)</th>
-                                    <th>หมายเหตุ</th>
-                                </tr>
+                                    <th>ระยะเวลา(ชม.)</th> 
+                                    <th>ระยะเวลา(นาที)</th> 
+                                    <th>สถานะ</th>
+                                    <th>ที่ปรึกษา</th>
+                                    <th>   </th> </tr>
                             </thead>
                             <tbody id="log-table-body">
                                 </tbody>
                         </table>
                     </div>
-                    <input type="hidden" id="hasLogEntries" required data-error-message="กรุณากรอกข้อมูลในตารางงานอย่างน้อย 1 แถว">
-                </div>
+                    </div>
                 
                 <div id="addRowContainer" class="mt-4 flex justify-center">
                     <button type="button" id="addRowBtn" 
@@ -261,7 +267,7 @@
                             <label for="leave_checkbox" class="text-sm font-medium text-gray-700 w-24 flex-shrink-0">
                                 ลา
                             </label>
-                            <input type="text" id="leave_details" placeholder="ตย.ลาพักผ่อน ระบุ ว/ด/ป" class="p-2 text-sm flex-grow">
+                            <input type="text" id="leave_details" placeholder="ลาxxx ระบุ ว/ด/ป" class="p-2 text-sm flex-grow">
                         </div>
                         
                         <div class="flex items-center space-x-4 input-group">
@@ -281,8 +287,8 @@
                         </div>
 
                         <div class="flex items-center space-x-4 input-group">
-                            <div class="h-4 w-4 invisible"></div> <label for="substitute_worker" class="text-sm font-medium text-gray-700 w-24 flex-shrink-0">
-                                ผู้ปฏิบัติงานแทน
+                            <label for="substitute_worker" class="text-xs font-medium text-gray-700 w-32 flex-shrink-0 whitespace-nowrap">
+                                ผู้ปฏิบัติงานแทน (บัดดี้)
                             </label>
                             <select id="substitute_worker" class="p-2 text-sm bg-white flex-grow">
                                 <option value="" selected>-- กำลังโหลดพนักงาน --</option>
@@ -295,7 +301,7 @@
                         <label for="notes" class="block text-lg font-bold text-gray-800 mb-2">
                             📝 หมายเหตุ (ถ้ามี) 
                         </label>
-                        <textarea id="notes" rows="3" placeholder="ระบุข้อมูลเพิ่มเติม / อื่นๆ..."
+                        <textarea id="notes" rows="3" placeholder="รายละเอียดเพิ่มเติม(ถ้ามี)" 
                                   class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-accent focus:border-primary-accent"></textarea>
                     </div>
                 </div>
@@ -416,7 +422,7 @@
         }
 
         // --- 2. Make.com Webhook Configuration and Constants ---
-        const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/w9q4dwphpa5u4ob8wl026nuhkxqeqr4r'; 
+        const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/9jalxrjyd3lx5gzhm8sqyrl214xvgqgo'; 
         
         // URL สำหรับดึงรายชื่อพนักงาน (ใช้สำหรับ "ชื่อพนักงาน" ใน Header)
         const EMPLOYEE_LIST_JSON_URL = './employees.json'; 
@@ -430,13 +436,24 @@
         // URL สำหรับดึงรายชื่อหัวข้องาน (ใหม่: ใช้สำหรับ หัวข้องาน ในตาราง) 
         const TOPIC_LIST_JSON_URL = './topics.json'; 
         
+        // --- START: MODIFICATION 1 - New URLs for Time and Status ---
+        const TIME_OPTIONS_JSON_URL = './time_options.json'; 
+        const STATUS_OPTIONS_JSON_URL = './status.json'; 
+        // --- END: MODIFICATION 1 ---
+        
         let EMPLOYEE_OPTIONS = []; // สำหรับ Header: ชื่อพนักงาน
         let AGENT_OPTIONS = [];    // สำหรับตาราง: Agent
         let CUSTOMER_OPTIONS = []; // สำหรับตาราง: ผู้แจ้งงาน
         let TOPIC_OPTIONS = [];    // สำหรับตาราง: หัวข้องาน
+        
+        // --- START: MODIFICATION 1 - New Variables for Loaded Data ---
+        let TIME_OPTIONS = { hours: [], minutes: [] };    
+        let STATUS_OPTIONS_LOADED = [];    
+        // --- END: MODIFICATION 1 ---
 
-        // --- 3. Function to load and populate Employee, Agent, and Customer lists ---
-        async function loadEmployeeAndCustomerLists() {
+
+        // --- 3. Function to load and populate all configuration lists (Renamed) ---
+        async function loadConfigurationData() {
             // A. Load Employee List (for ID: requester -> "ชื่อพนักงาน" ใน Header)
             try {
                 const response = await fetch(EMPLOYEE_LIST_JSON_URL);
@@ -449,7 +466,7 @@
                     employeeSelect.innerHTML += `<option value="${name}">${name}</option>`;
                 });
                 
-                // แก้ไข: NEW: Populate Substitute Worker dropdown
+                // Populate Substitute Worker dropdown
                 const substituteSelect = document.getElementById('substitute_worker');
                 if (substituteSelect) {
                     // Use a value="" option that is not disabled, as this field is optional
@@ -462,7 +479,7 @@
             } catch (error) {
                 console.error("Error loading employee list:", error);
                 document.getElementById('requester').innerHTML = '<option value="" disabled>-- โหลดรายชื่อพนักงานล้มเหลว --</option>';
-                // แก้ไข: NEW: Handle error case for substitute worker
+                // Handle error case for substitute worker
                 const substituteSelect = document.getElementById('substitute_worker');
                 if (substituteSelect) {
                     substituteSelect.innerHTML = '<option value="" disabled>-- โหลดรายชื่อพนักงานล้มเหลว --</option>';
@@ -504,6 +521,27 @@
                 console.error("Error loading topic list (Check JSON syntax):", error);
                 TOPIC_OPTIONS = []; // ถ้ามี error ให้ใช้ Array ว่าง
             }
+            
+            // --- START: MODIFICATION 1 - Load Time and Status Options ---
+            // E. Load Time Options (for Hours and Minutes)
+            try {
+                const response = await fetch(TIME_OPTIONS_JSON_URL);
+                if (!response.ok) throw new Error(`HTTP status: ${response.status}. ตรวจสอบไฟล์ time_options.json`);
+                TIME_OPTIONS = await response.json();
+            } catch (error) {
+                console.error("Error loading time options:", error);
+            }
+
+            // F. Load Status Options
+            try {
+                const response = await fetch(STATUS_OPTIONS_JSON_URL);
+                if (!response.ok) throw new Error(`HTTP status: ${response.status}. ตรวจสอบไฟล์ status.json`);
+                STATUS_OPTIONS_LOADED = await response.json();
+            } catch (error) {
+                console.error("Error loading status options:", error);
+            }
+            // --- END: MODIFICATION 1 ---
+
 
             // After loading, initialize the table for the first time
             document.getElementById('log-table-body').innerHTML = ''; // Clear existing rows
@@ -511,32 +549,15 @@
             addTableRows(ROWS_TO_ADD_BATCH); // Add the initial 10 rows
         }
 
-        // --- FUNCTION: Generate duration options 0.5 to 10.0 step 0.5 ---
-        function generateDurationOptions() {
-            let html = '<option value="" disabled selected>-- เลือกชม. --</option>';
-            const start = 0.5;
-            const end = 10.0;
-            const step = 0.5;
-            
-            for (let duration = start; duration <= end; duration += step) {
-                const fixedDuration = duration.toFixed(1); 
-                html += `<option value="${fixedDuration}">${fixedDuration}</option>`;
-            }
-            return html;
-        }
-        
+        // --- START: MODIFICATION 1 - Remove hardcoded duration functions ---
+        // REMOVED: generateDurationOptions and generateMinuteOptions
+        // --- END: MODIFICATION 1 ---
+
+
         // --- 4. Function to dynamically add table rows ---
         let totalRows = 0; // Global counter for total rows in the table
         const ROWS_TO_ADD_BATCH = 10; // Number of rows to add at once
         
-        // สถานะสำหรับ Dropdown
-        const STATUS_OPTIONS = [
-            { value: "Complete", text: "สำเร็จ" },
-            { value: "InProgress", text: "อยู่ระหว่างดำเนินการ" },
-            { value: "Pending", text: "รอข้อมูล" },
-            { value: "Escalated", text: "ส่งต่อผู้เชี่ยวชาญ" }
-        ];
-
         function addTableRows(numRowsToAdd = ROWS_TO_ADD_BATCH) {
             const tableBody = document.getElementById('log-table-body');
             
@@ -565,21 +586,34 @@
                 topicOptionsHtml += `<option value="${item.value}" ${disabledAttr} ${classAttr}>${item.text}</option>`;
             });
 
-            // Create Status Dropdown HTML fragment for the table
+            // --- START: MODIFICATION 1 - Use loaded data for Duration and Status ---
+            // Create Status Dropdown HTML fragment for the table (Uses STATUS_OPTIONS_LOADED)
             let statusOptionsHtml = '<option value="">-- เลือกสถานะ --</option>';
-            STATUS_OPTIONS.forEach(opt => {
+            STATUS_OPTIONS_LOADED.forEach(opt => {
                 statusOptionsHtml += `<option value="${opt.value}">${opt.text}</option>`;
             });
             
-            // Create Duration Dropdown HTML fragment for the table
-            const durationOptionsHtml = generateDurationOptions();
+            // Create Duration (Hours) Dropdown HTML fragment for the table (Uses TIME_OPTIONS.hours)
+            let durationOptionsHtml = '<option value="" disabled selected>-- เลือก--</option>';
+            TIME_OPTIONS.hours.forEach(opt => {
+                 durationOptionsHtml += `<option value="${opt.value}">${opt.text}</option>`;
+            });
+            
+            // Create Minute Dropdown HTML fragment for the table (Uses TIME_OPTIONS.minutes)
+            let minuteOptionsHtml = '<option value="" disabled selected>-- เลือก--</option>'; 
+            TIME_OPTIONS.minutes.forEach(opt => {
+                // Ensure value="0" remains selected by default if that is the intent
+                const selectedAttr = opt.value === 0 ? 'selected' : ''; 
+                minuteOptionsHtml += `<option value="${opt.value}" ${selectedAttr}>${opt.text}</option>`;
+            });
+            // --- END: MODIFICATION 1 ---
 
 
             for (let i = startIndex; i < endIndex; i++) {
                 const row = document.createElement('tr');
                 row.id = `log-row-${i}`;
-
-                // Column 1: Row Number
+                
+                // Column 1: Row Number (#)
                 row.innerHTML += `<td>${i + 1}</td>`;
 
                 // Column 2: ผู้แจ้งงาน (Dropdown - uses CUSTOMER_OPTIONS)
@@ -615,8 +649,15 @@
                         <input type="text" id="detail-text-${i}" name="detail-text" placeholder="รายละเอียด..." class="bg-white">
                     </td>
                 `;
+                
+                // Column 6: ปัญหาที่พบ (Input Text) 
+                row.innerHTML += `
+                    <td>
+                        <input type="text" id="problem-text-${i}" name="problem-text" placeholder="ปัญหา/ข้อสังเกต" class="bg-white">
+                    </td>
+                `;
 
-                // Column 6: ระยะเวลา(ชม.) (DROPDOWN) 
+                // Column 7: ระยะเวลา(ชม.) (DROPDOWN) 
                 row.innerHTML += `
                     <td>
                         <select id="duration-select-${i}" name="duration-select" value="" class="bg-white">
@@ -624,15 +665,17 @@
                         </select>
                     </td>
                 `;
-
-                // Column 7: ผลการติดตามตรวจสอบ (Input Text ONLY)
+                
+                // Column 8: ระยะเวลา(นาที) (DROPDOWN) 
                 row.innerHTML += `
                     <td>
-                        <input type="text" id="followup-text-${i}" name="followup-text" placeholder="ผลการติดตาม..." class="bg-white">
+                        <select id="minute-select-${i}" name="minute-select" value="" class="bg-white">
+                             ${minuteOptionsHtml}
+                        </select>
                     </td>
                 `;
 
-                // Column 8: สถานะ (Dropdown)
+                // Column 9: สถานะ (Dropdown) 
                 row.innerHTML += `
                     <td>
                         <select id="status-select-${i}" name="status-select" value="" class="bg-white">
@@ -641,19 +684,26 @@
                     </td>
                 `;
 
-                // Column 9: ปัญหาที่พบ (Input Text)
+                // Column 10: ที่ปรึกษา/หมายเหตุ (Input Text) - WIDER
                 row.innerHTML += `
                     <td>
-                        <input type="text" id="problem-text-${i}" name="problem-text" placeholder="ปัญหา/ข้อสังเกต" class="bg-white">
+                        <input type="text" id="note-text-${i}" name="note-text" placeholder="ระบุชื่อ-สกุล" class="bg-white">
                     </td>
                 `;
-
-                // Column 10: หมายเหตุ (Input Text)
-                row.innerHTML += `
+                
+                // START: MODIFICATION 3 - New Delete Button Column
+                 row.innerHTML += `
                     <td>
-                        <input type="text" id="note-text-${i}" name="note-text" placeholder="ปฏิบัติงานแทน/อื่นๆ" class="bg-white">
+                        <button type="button" 
+                                onclick="deleteRow(${i})"
+                                class="text-xs font-semibold text-red-600 hover:text-red-800 transition duration-150 p-1 rounded hover:bg-red-50 w-full" 
+                                style="white-space: nowrap;">
+                            ลบข้อมูล
+                        </button>
                     </td>
                 `;
+                // END: MODIFICATION 3
+                
                 tableBody.appendChild(row);
             }
             
@@ -661,17 +711,64 @@
             totalRows = endIndex; // Update global counter
             updateSelectColorOnLoad();
             
-            // NEW: Add event listeners for duration changes (เฉพาะแถวที่เพิ่มใหม่)
-            for (let i = prevTotalRows; i < endIndex; i++) {
-                const durationSelect = document.getElementById(`duration-select-${i}`);
-                if (durationSelect) {
-                    durationSelect.addEventListener('change', updateTotalDurationDisplay);
-                }
-            }
+            // NOTE: The event listeners are now attached via delegation in window.addEventListener('load')
 
             // NEW: Initial update of total duration
             updateTotalDurationDisplay(); 
         }
+        
+        // START: MODIFICATION 3 - Delete Row Functions (Robust)
+        
+        // --- NEW: Function to delete a table row ---
+        function deleteRow(rowIndex) {
+            const row = document.getElementById(`log-row-${rowIndex}`);
+            if (row) {
+                row.remove();
+                
+                // Re-index all subsequent rows in the UI and their IDs
+                reindexRows(rowIndex);
+                
+                updateTotalDurationDisplay();
+            }
+        }
+        
+        // --- NEW: Function to re-index rows after deletion ---
+        function reindexRows(startIndex) {
+            const tableBody = document.getElementById('log-table-body');
+            const rows = tableBody.getElementsByTagName('tr'); // Live collection of existing rows
+            
+            // Loop through all *existing* rows from the deleted row's index onwards
+            for (let i = startIndex; i < rows.length; i++) {
+                const oldRow = rows[i]; 
+                const newIndex = i;
+                const newRowId = `log-row-${newIndex}`;
+                
+                // 1. Update Row ID
+                oldRow.id = newRowId; 
+                
+                // 2. Update Row Number Display (First <td>)
+                oldRow.querySelector('td:first-child').textContent = newIndex + 1;
+
+                // 3. Update all input/select IDs 
+                const elements = oldRow.querySelectorAll('[id^="requester-select-table-"], [id^="agent-select-table-"], [id^="topic-select-table-"], [id^="detail-text-"], [id^="problem-text-"], [id^="duration-select-"], [id^="minute-select-"], [id^="status-select-"], [id^="note-text-"]');
+                
+                elements.forEach(el => {
+                    const idParts = el.id.split('-');
+                    idParts[idParts.length - 1] = newIndex; 
+                    el.id = idParts.join('-');
+                });
+                
+                // 4. Update Delete Button onclick attribute
+                const deleteButton = oldRow.querySelector('button[onclick^="deleteRow("]');
+                if (deleteButton) {
+                    deleteButton.setAttribute('onclick', `deleteRow(${newIndex})`);
+                }
+            }
+            
+            // 5. Update global row counter
+            totalRows = rows.length; 
+        }
+        // END: MODIFICATION 3
 
         // --- 5. Function to update dropdown text color on load (IMPROVED with Focus/Blur) ---
         function updateSelectColorOnLoad() {
@@ -725,50 +822,49 @@
              });
         }
 
-        // --- 6. Function to collect data from the table (มีการเพิ่ม noteTable สำหรับหมายเหตุในตาราง) ---
+        // --- 6. Function to collect data from the table (มีการแก้ไขตามการเปลี่ยนแปลงคอลัมน์) ---
         function collectTableData() {
             const data = [];
-            const hasLogEntriesInput = document.getElementById('hasLogEntries');
-            let foundFilledRow = false;
-
-            // Loop up to the current total number of rows
+            
+            // Loop up to the current total number of rows (including empty/deleted indexes)
+            // The logic inside must check for element existence
             for (let i = 0; i < totalRows; i++) {
-                const requesterSelectTable = document.getElementById(`requester-select-table-${i}`) ? document.getElementById(`requester-select-table-${i}`).value : '';
-                const agentSelectTable = document.getElementById(`agent-select-table-${i}`) ? document.getElementById(`agent-select-table-${i}`).value : ''; 
-                const topicSelect = document.getElementById(`topic-select-table-${i}`) ? document.getElementById(`topic-select-table-${i}`).value : ''; 
-                const detailText = document.getElementById(`detail-text-${i}`) ? document.getElementById(`detail-text-${i}`).value.trim() : '';
-                const durationSelect = document.getElementById(`duration-select-${i}`) ? document.getElementById(`duration-select-${i}`).value : ''; 
-                const followupText = document.getElementById(`followup-text-${i}`) ? document.getElementById(`followup-text-${i}`).value.trim() : '';
-                const statusSelect = document.getElementById(`status-select-${i}`) ? document.getElementById(`status-select-${i}`).value : '';
-                const problemText = document.getElementById(`problem-text-${i}`) ? document.getElementById(`problem-text-${i}`).value.trim() : '';
-                const noteTable = document.getElementById(`note-text-${i}`) ? document.getElementById(`note-text-${i}`).value.trim() : ''; 
                 
-                // Check if any field is filled 
-                const isRowFilled = requesterSelectTable || agentSelectTable || topicSelect || detailText || durationSelect || followupText || statusSelect || problemText || noteTable;
+                // Use a check for the row existence after deletion/re-indexing
+                const rowElement = document.getElementById(`log-row-${i}`);
+                if (!rowElement) {
+                    continue; // Skip if the row was deleted
+                }
+
+                // Use the rowElement to query children
+                const requesterSelectTable = rowElement.querySelector(`[id^="requester-select-table-"]`) ? rowElement.querySelector(`[id^="requester-select-table-"]`).value : '';
+                const agentSelectTable = rowElement.querySelector(`[id^="agent-select-table-"]`) ? rowElement.querySelector(`[id^="agent-select-table-"]`).value : ''; 
+                const topicSelect = rowElement.querySelector(`[id^="topic-select-table-"]`) ? rowElement.querySelector(`[id^="topic-select-table-"]`).value : ''; 
+                const detailText = rowElement.querySelector(`[id^="detail-text-"]`) ? rowElement.querySelector(`[id^="detail-text-"]`).value.trim() : '';
+                const problemText = rowElement.querySelector(`[id^="problem-text-"]`) ? rowElement.querySelector(`[id^="problem-text-"]`).value.trim() : ''; 
+                const durationSelect = rowElement.querySelector(`[id^="duration-select-"]`) ? rowElement.querySelector(`[id^="duration-select-"]`).value : ''; 
+                const minuteSelect = rowElement.querySelector(`[id^="minute-select-"]`) ? rowElement.querySelector(`[id^="minute-select-"]`).value : ''; // NEW FIELD
+                const statusSelect = rowElement.querySelector(`[id^="status-select-"]`) ? rowElement.querySelector(`[id^="status-select-"]`).value : ''; 
+                const noteTable = rowElement.querySelector(`[id^="note-text-"]`) ? rowElement.querySelector(`[id^="note-text-"]`).value.trim() : ''; 
+                
+                // Check if any field is filled (Include minuteSelect in check)
+                const isRowFilled = requesterSelectTable || agentSelectTable || topicSelect || detailText || durationSelect || (minuteSelect !== '0') || statusSelect || problemText || noteTable;
                 
                 if (isRowFilled) {
-                    foundFilledRow = true;
                     data.push({
-                        row: i + 1,
+                        // Get displayed row number
+                        row: parseInt(rowElement.querySelector('td:first-child').textContent, 10), 
                         requesterTable: requesterSelectTable, 
                         agentTable: agentSelectTable, 
                         topicDescription: topicSelect, 
                         detailDescription: detailText,
+                        problemFound: problemText, 
                         duration: durationSelect, 
-                        followupDescription: followupText,
-                        status: statusSelect,
-                        problemFound: problemText,
+                        minuteDuration: minuteSelect, // NEW FIELD
+                        status: statusSelect, 
                         noteTable: noteTable 
                     });
                 }
-            }
-
-            if (foundFilledRow) {
-                hasLogEntriesInput.value = "true";
-                hasLogEntriesInput.setCustomValidity('');
-            } else {
-                hasLogEntriesInput.value = "";
-                hasLogEntriesInput.setCustomValidity(hasLogEntriesInput.getAttribute('data-error-message'));
             }
 
             return data;
@@ -776,27 +872,66 @@
 
         // --- NEW: Function to calculate and display total duration ---
         function updateTotalDurationDisplay() {
-            let totalDuration = 0;
+            let totalDurationInHours = 0;
             
             // Loop through all existing rows
             for (let i = 0; i < totalRows; i++) {
                 const durationSelect = document.getElementById(`duration-select-${i}`);
+                const minuteSelect = document.getElementById(`minute-select-${i}`); // NEW FIELD
+                
+                // 1. Add Hours
                 if (durationSelect && durationSelect.value) {
-                    // Try to parse the float value, default to 0 if parsing fails
-                    const duration = parseFloat(durationSelect.value);
-                    if (!isNaN(duration)) {
-                        totalDuration += duration;
+                    const hours = parseFloat(durationSelect.value);
+                    if (!isNaN(hours)) {
+                        totalDurationInHours += hours;
+                    }
+                }
+                
+                // 2. Add Minutes (Convert to Hours)
+                if (minuteSelect && minuteSelect.value) {
+                    const minutes = parseInt(minuteSelect.value, 10);
+                    if (!isNaN(minutes)) {
+                        totalDurationInHours += (minutes / 60.0);
                     }
                 }
             }
             
             const displayElement = document.getElementById('totalDurationDisplay');
             if (displayElement) {
-                // Format to 1 decimal place and display in Thai
-                const formattedTotal = totalDuration.toFixed(1); 
-                displayElement.innerHTML = `รวมระยะเวลาปฏิบัติงาน: <span class="text-primary-accent">${formattedTotal}</span> ชั่วโมง`;
+                // START MODIFICATION: Convert decimal hours to Hours and Minutes
+                // แปลงชั่วโมงทั้งหมดเป็นนาที เพื่อแยกชั่วโมงและนาทีแบบเต็ม
+                const totalMinutes = Math.round(totalDurationInHours * 60);
+                
+                // คำนวณชั่วโมงเต็มและนาทีที่เหลือ
+                const hours = Math.floor(totalMinutes / 60);
+                const minutes = totalMinutes % 60;
+                
+                // เตรียมข้อความสำหรับแสดงผล
+                let timeDisplay = '';
+                
+                if (hours > 0) {
+                    timeDisplay += `${hours} ชั่วโมง`;
+                }
+                
+                // แสดงนาทีเฉพาะเมื่อมากกว่า 0
+                if (minutes > 0) {
+                    if (hours > 0) {
+                        timeDisplay += ' '; // เพิ่มช่องว่างถ้ามีทั้งชั่วโมงและนาที
+                    }
+                    timeDisplay += `${minutes} นาที`;
+                }
+
+                // กรณีที่ไม่มีการบันทึกเวลาเลย (รวม 0 นาที)
+                if (totalMinutes === 0) {
+                    timeDisplay = '0 ชั่วโมง 0 นาที'; 
+                }
+
+                // อัปเดตการแสดงผล
+                displayElement.innerHTML = `รวมระยะเวลาปฏิบัติงาน: <span class="text-primary-accent">${timeDisplay}</span>`;
+                // END MODIFICATION
             }
         }
+
         
         // --- 7A. MODAL 1 Control Functions ---
         const modal = document.getElementById('exportModal');
@@ -905,21 +1040,29 @@
         document.getElementById('logForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // 1. Collect Table Data and perform validation
+            // 1. Collect Table Data 
             const tableData = collectTableData();
-            const hasLogEntriesInput = document.getElementById('hasLogEntries');
+            
+            // 2. Collect Leave/Training/Fieldwork status
+            const leave_checkbox = document.getElementById('leave_checkbox').checked;
+            const training_checkbox = document.getElementById('training_checkbox').checked;
+            const fieldwork_checkbox = document.getElementById('fieldwork_checkbox').checked;
 
-            // 2. Check form validity 
+            // 3. **NEW Validation**: Check if there's log entries OR any checkbox is checked
+            const isAnyLeaveChecked = leave_checkbox || training_checkbox || fieldwork_checkbox;
+            const hasLogEntries = tableData.length > 0;
+            
+            if (!hasLogEntries && !isAnyLeaveChecked) {
+                 showMessage("กรุณากรอกข้อมูลในตารางงานอย่างน้อย 1 แถว หรือ เลือกอย่างใดอย่างหนึ่งในหัวข้อ 'รายละเอียดการลาหยุดงาน / อบรมประจำปี / ลงพื้นที่'", "error"); 
+                 return;
+            }
+
+            // 4. Prepare the final data object
+            // ตรวจสอบความถูกต้องของฟอร์ม (ส่วนหัว) ที่ยัง required อยู่ (date, requester)
             if (!document.getElementById('logForm').checkValidity()) {
-                 hasLogEntriesInput.reportValidity(); 
                  return;
             }
-            if (tableData.length === 0) {
-                 showMessage("กรุณากรอกข้อมูลในตารางงานอย่างน้อย 1 แถว", "error"); 
-                 return;
-            }
-
-            // 3. Prepare the final data object
+            
             const employeeName = document.getElementById('requester').value; 
             
             const dateInput = document.getElementById('date').value; 
@@ -933,11 +1076,11 @@
             }
             
             // Collect new fields for leave/training/fieldwork
-            const leave_checkbox = document.getElementById('leave_checkbox').checked;
+            
             const leave_details = document.getElementById('leave_details').value;
-            const training_checkbox = document.getElementById('training_checkbox').checked;
+            
             const training_details = document.getElementById('training_details').value;
-            const fieldwork_checkbox = document.getElementById('fieldwork_checkbox').checked;
+            
             const fieldwork_details = document.getElementById('fieldwork_details').value;
             const substitute_worker = document.getElementById('substitute_worker').value; // นี่คือ select box
             const notes = document.getElementById('notes').value;
@@ -965,11 +1108,11 @@
                 createdBy: employeeName     
             };
             
-            // 4. เก็บข้อมูลที่บันทึกสำเร็จล่าสุดไว้สำหรับ Export
+            // 5. เก็บข้อมูลที่บันทึกสำเร็จล่าสุดไว้สำหรับ Export
             lastSubmissionData = data;
 
 
-            // 5. Send data to Make.com Webhook
+            // 6. Send data to Make.com Webhook
             try {
                 const response = await fetch(MAKE_WEBHOOK_URL, {
                     method: 'POST',
@@ -989,7 +1132,7 @@
                     dateInput.value = formatDate(today); 
                     
                     // Reset select colors and redraw table
-                    await loadEmployeeAndCustomerLists(); 
+                    await loadConfigurationData(); // MODIFIED: Call new function name
                     updateTotalDurationDisplay(); // NEW: อัปเดตยอดรวมหลังจากโหลดตารางใหม่
                     
                     showExportModal(); 
@@ -1004,7 +1147,7 @@
             }
         });
         
-        // --- 9. ฟังก์ชันสำหรับเตรียมข้อมูลและ Export เป็น Excel (ปรับปรุงให้รวมเป็นชีทเดียว และแก้ไขรูปแบบ) ---
+        // --- 9. ฟังก์ชันสำหรับเตรียมข้อมูลและ Export เป็น Excel (ปรับปรุงตามการเปลี่ยนแปลงคอลัมน์) ---
         function exportDataToExcel() {
             if (!lastSubmissionData) {
                 showFinalStatusModal("ไม่พบข้อมูลที่บันทึกสำเร็จล่าสุด กรุณาลองบันทึกข้อมูลใหม่อีกครั้ง");
@@ -1018,16 +1161,49 @@
             // NEW: แปลงวันที่ให้เป็นรูปแบบไทยและปี พ.ศ. (04 พ.ย. 2568)
             const formattedThaiDate = formatDateThaiBuddhist(data.dateDisplay);
             
-            // **NEW: Calculate Total Duration**
-            let totalDuration = 0;
+            // **NEW: Calculate Total Duration (Recalculate based on hours AND minutes)**
+            let totalDurationInHours = 0;
             data.logEntries.forEach(entry => {
-                const duration = parseFloat(entry.duration);
-                if (!isNaN(duration)) {
-                    totalDuration += duration;
+                const hours = parseFloat(entry.duration);
+                if (!isNaN(hours)) {
+                    totalDurationInHours += hours;
+                }
+                const minutes = parseInt(entry.minuteDuration, 10);
+                 if (!isNaN(minutes)) {
+                    totalDurationInHours += (minutes / 60.0);
                 }
             });
-            const formattedTotalDuration = totalDuration.toFixed(1);
+            
+            // --- START MODIFICATION FOR EXCEL FORMATTING ---
+            const totalMinutes = Math.round(totalDurationInHours * 60);
+            
+            // Calculate full hours and remaining minutes
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            
+            // Prepare the display text for Excel
+            let timeDisplay = '';
+            
+            if (hours > 0) {
+                timeDisplay += `${hours} ชั่วโมง`;
+            }
+            
+            // Only show minutes if greater than 0
+            if (minutes > 0) {
+                // Add space if both hours and minutes exist
+                if (hours > 0) { 
+                    timeDisplay += ' '; 
+                }
+                timeDisplay += `${minutes} นาที`;
+            }
 
+            // Case where total time is 0
+            if (totalMinutes === 0) {
+                timeDisplay = '0 ชั่วโมง 0 นาที'; 
+            }
+            // --- END MODIFICATION FOR EXCEL FORMATTING ---
+
+            
             // 1. กำหนดชื่อไฟล์ตามที่ร้องขอ: Report_ชื่อพนักงาน_วันที่บันทึก
             // แก้ไข: ใช้ชื่อพนักงานเต็ม โดยลบเฉพาะอักขระที่ห้ามใช้ในชื่อไฟล์ (/ \ : * ? " < > |) เพื่อให้รองรับภาษาไทย
             const safeEmployeeName = employeeName.replace(/[\/\\:*?"<>|]/g, '').trim();
@@ -1036,43 +1212,43 @@
             const combinedTableBody = document.querySelector('#combined-export-table tbody');
             let htmlContent = '';
             
-            // 2. ข้อมูลสรุปส่วนหัว (ใช้ colspan="9" สำหรับช่องข้อมูล เพื่อให้รวมเป็น 10 คอลัมน์)
+            // 2. ข้อมูลสรุปส่วนหัว (ปรับ colspan เป็น 11 เนื่องจากตารางหลักมี 11 คอลัมน์)
             htmlContent += `
-                <tr><th colspan="10" style="background-color: #e9e5f1; font-weight: bold; text-align: left;">ข้อมูลสรุปการปฏิบัติงาน</th></tr>
-                <tr><td style="font-weight: bold;">วันที่บันทึก:</td><td colspan="9" style="text-align: left; mso-number-format:\@">${formattedThaiDate}</td></tr>
-                <tr><td style="font-weight: bold;">ชื่อพนักงาน:</td><td colspan="9">${data.agent}</td></tr>
-                <tr><td style="font-weight: bold;">ลา:</td><td colspan="9">${data.leaveStatus.isLeave ? 'ใช่' : 'ไม่'} (${data.leaveStatus.leaveDetails || '-'})</td></tr>
-                <tr><td style="font-weight: bold;">อบรมประจำปี:</td><td colspan="9">${data.leaveStatus.isTraining ? 'ใช่' : 'ไม่'} (${data.leaveStatus.trainingDetails || '-'})</td></tr>
-                <tr><td style="font-weight: bold;">ลงพื้นที่:</td><td colspan="9">${data.leaveStatus.isFieldwork ? 'ใช่' : 'ไม่'} (${data.leaveStatus.fieldworkDetails || '-'})</td></tr>
-                <tr><td style="font-weight: bold;">ผู้ปฏิบัติงานแทน:</td><td colspan="9">${data.leaveStatus.substituteWorker || '-'}</td></tr>
-                <tr><td style="font-weight: bold;">หมายเหตุ (ทั่วไป):</td><td colspan="9">${data.notes || '-'}</td></tr>
+                <tr><th colspan="11" style="background-color: #e9e5f1; font-weight: bold; text-align: left;">ข้อมูลสรุปการปฏิบัติงาน</th></tr>
+                <tr><td style="font-weight: bold;">วันที่บันทึก:</td><td colspan="10" style="text-align: left; mso-number-format:\@">${formattedThaiDate}</td></tr>
+                <tr><td style="font-weight: bold;">ชื่อพนักงาน:</td><td colspan="10">${data.agent}</td></tr>
+                <tr><td style="font-weight: bold;">ลา:</td><td colspan="10">${data.leaveStatus.isLeave ? 'ใช่' : 'ไม่'} (${data.leaveStatus.leaveDetails || '-'})</td></tr>
+                <tr><td style="font-weight: bold;">อบรมประจำปี:</td><td colspan="10">${data.leaveStatus.isTraining ? 'ใช่' : 'ไม่'} (${data.leaveStatus.trainingDetails || '-'})</td></tr>
+                <tr><td style="font-weight: bold;">ลงพื้นที่:</td><td colspan="10">${data.leaveStatus.isFieldwork ? 'ใช่' : 'ไม่'} (${data.leaveStatus.fieldworkDetails || '-'})</td></tr>
+                <tr><td style="font-weight: bold;">ผู้ปฏิบัติงานแทน:</td><td colspan="10">${data.leaveStatus.substituteWorker || '-'}</td></tr>
+                <tr><td style="font-weight: bold;">หมายเหตุ (ทั่วไป):</td><td colspan="10">${data.notes || '-'}</td></tr>
                 
-                <tr><td style="font-weight: bold;">รวมระยะเวลาปฏิบัติงาน:</td><td colspan="9" style="font-weight: bold;">${formattedTotalDuration} ชั่วโมง</td></tr>
+                <tr><td style="font-weight: bold;">รวมระยะเวลาปฏิบัติงาน:</td><td colspan="10" style="font-weight: bold;">${timeDisplay}</td></tr>
                 
-                <tr><td colspan="10" style="height: 20px;"></td></tr> 
+                <tr><td colspan="11" style="height: 20px;"></td></tr> 
                 `;
             
-            // 3. ส่วนหัวตารางรายการงาน (10 คอลัมน์)
+            // 3. ส่วนหัวตารางรายการงาน (11 คอลัมน์)
             htmlContent += `
-                <tr><th colspan="10" style="background-color: #e9e5f1; font-weight: bold; text-align: left;">** รายละเอียดงาน **</th></tr>
+                <tr><th colspan="11" style="background-color: #e9e5f1; font-weight: bold; text-align: left;">** รายละเอียดงาน **</th></tr>
                 <tr style="background-color: #e9e5f1;">
                     <th style="font-weight: bold;">#</th>
                     <th style="font-weight: bold;">ผู้แจ้งงาน</th>
                     <th style="font-weight: bold; mso-number-format:\@">Agent</th> 
                     <th style="font-weight: bold;">หัวข้องาน</th>
                     <th style="font-weight: bold;">รายละเอียดงาน</th>
-                    <th style="font-weight: bold;">ระยะเวลา(ชม.)</th> 
-                    <th style="font-weight: bold;">ผลการติดตามตรวจสอบ</th>
-                    <th style="font-weight: bold;">สถานะ</th>
                     <th style="font-weight: bold;">ปัญหาที่พบ (ถ้ามี)</th>
-                    <th style="font-weight: bold;">หมายเหตุ</th>
-                </tr>
+                    <th style="font-weight: bold;">ระยะเวลา(ชม.)</th> 
+                    <th style="font-weight: bold;">ระยะเวลา(นาที)</th> 
+                    <th style="font-weight: bold;">สถานะ</th>
+                    <th style="font-weight: bold;">ที่ปรึกษา</th>
+                    <th style="font-weight: bold;">ลบ</th> </tr>
             `;
 
-            // 4. ข้อมูลรายการงาน (10 คอลัมน์)
+            // 4. ข้อมูลรายการงาน (11 คอลัมน์ ตามลำดับใหม่)
             data.logEntries.forEach(entry => {
-                // ต้อง map สถานะจาก value เป็น text
-                const statusText = STATUS_OPTIONS.find(opt => opt.value === entry.status)?.text || entry.status;
+                // MODIFIED: Use the loaded STATUS_OPTIONS_LOADED
+                const statusText = STATUS_OPTIONS_LOADED.find(opt => opt.value === entry.status)?.text || entry.status;
                 
                 // คง mso-number-format:\@ ใน Agent Data Cell เพื่อบังคับเป็น Text
                 htmlContent += `
@@ -1082,12 +1258,12 @@
                         <td style="mso-number-format:\@">${entry.agentTable}</td>
                         <td>${entry.topicDescription}</td>
                         <td>${entry.detailDescription}</td>
-                        <td>${entry.duration}</td>
-                        <td>${entry.followupDescription}</td>
-                        <td>${statusText}</td>
-                        <td>${entry.problemFound}</td>
-                        <td>${entry.noteTable}</td>
-                    </tr>
+                        <td>${entry.problemFound}</td> 
+                        <td>${entry.duration}</td>     
+                        <td>${entry.minuteDuration}</td> 
+                        <td>${statusText}</td>         
+                        <td>${entry.noteTable}</td>    
+                        <td></td> </tr>
                 `;
             });
             
@@ -1136,11 +1312,20 @@
             dateInput.value = formattedToday; 
             
             // โหลดรายชื่อพนักงาน, Agent และลูกค้า และวาดตาราง
-            await loadEmployeeAndCustomerLists();
+            await loadConfigurationData(); // MODIFIED: Call new function name
 
             // NEW: Add event listener for the 'Add Row' button
             document.getElementById('addRowBtn').addEventListener('click', () => {
                  addTableRows(ROWS_TO_ADD_BATCH); // Add 10 more rows
+            });
+            
+            // NEW: Event Delegation for Total Duration Update 
+            // Attach a single listener to the table body to catch changes on all rows
+            const logTableBody = document.getElementById('log-table-body');
+            logTableBody.addEventListener('change', function(e) {
+                 if (e.target.name === 'duration-select' || e.target.name === 'minute-select') {
+                    updateTotalDurationDisplay();
+                 }
             });
 
             // Initial call to display total duration on load
