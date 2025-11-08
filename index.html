@@ -17,10 +17,13 @@
                         sans: ['Prompt', 'Inter', 'sans-serif'], 
                     },
                     colors: {
-                        // Custom color scheme: Deep Purple, Magenta (Based on #480ca8)
-                        'primary-accent': '#480ca8',       // Main Accent (Deep Purple)
-                        'primary-hover': '#380a84',        // Darker shade for button hover
-                        'soft-focus': '#6930c3',           // Focus Ring (Lighter Purple for Border)
+                        // Custom color scheme: Changed to Rich Indigo
+                        // **แก้ไข** สีหลักสำหรับปุ่มให้เข้มขึ้น
+                        'primary-accent': '#3a0172',       // Main Accent (Rich Indigo)
+                        'primary-hover': '#290150',        // Darker shade for button hover
+                        'soft-focus': '#5e179d',           // Focus Ring (Vibrant Indigo for Border)
+                        
+                        // สีอื่นๆ ยังคงเดิม
                         'page-bg': '#f4f0fa',              // Page Background (Very Light Purple)
                         'soft-divider': '#eae4f3',         // Soft Divider (Light Purple-Gray)
                         'accent-sunset': '#f72585',        // Secondary Accent (Vibrant Magenta - Warning)
@@ -35,13 +38,24 @@
         }
     </script>
     <style>
+        /* --- NEW: Background Gradient Styling (แก้ไขให้เป็น Gradient) --- */
+        body {
+            /* **แก้ไข** เป็น Gradient ตามที่ร้องขอ: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%) */
+            background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%); 
+            background-size: cover; /* ครอบคลุมพื้นที่ทั้งหมด */
+            background-attachment: fixed; /* ตรึงรูปภาพไว้เมื่อ Scroll */
+            background-repeat: no-repeat; /* ไม่ทำซ้ำรูปภาพ */
+            background-position: center center; /* จัดตำแหน่งกึ่งกลาง */
+            background-color: #f4f0fa; /* สีสำรองกรณีโหลดรูปภาพไม่ได้ */
+        }
+        
         /* Custom styles for input focus */
         .input-group input:focus, 
         .input-group select:focus, 
         .input-group textarea:focus {
-            border-color: #480ca8; /* primary-accent */
-            /* Use custom RGBA shadow derived from #480ca8 */
-            box-shadow: 0 0 0 2px rgba(72, 12, 168, 0.3); 
+            border-color: #3a0172; /* primary-accent ใหม่ */
+            /* ใช้ custom RGBA shadow derived from #3a0172 */
+            box-shadow: 0 0 0 2px rgba(58, 1, 114, 0.3); 
             outline: none;
         }
         
@@ -90,7 +104,7 @@
         .log-table th {
             /* พื้นหลังหัวตารางเป็น Light Purple-Gray */
             background-color: #e9e5f1; 
-            color: #480ca8; /* primary-accent */
+            color: #3a0172; /* primary-accent ใหม่ */
             font-weight: 550;
             text-transform: uppercase;
             font-size: 0.75rem;
@@ -129,7 +143,7 @@
         }
         
         .log-table input[type="text"]:focus, .log-table input[type="number"]:focus, .log-table select:focus {
-            border-color: #480ca8; /* primary-accent */
+            border-color: #3a0172; /* primary-accent ใหม่ */
             box-shadow: none; 
         }
 
@@ -161,7 +175,7 @@
         .group-header-option {
             /* ใช้สีพื้นหลังและสีข้อความให้เข้ากับ Theme */
             background-color: #e9e5f1 !important; /* soft-divider color */
-            color: #480ca8 !important; /* primary-accent color */
+            color: #3a0172 !important; /* primary-accent ใหม่ */
             /* ทำให้ข้อความเป็นตัวหนา */
             font-weight: 700 !important; 
             padding: 6px 4px !important;
@@ -170,7 +184,7 @@
     <script src="https://cdn.jsdelivr.net/npm/table2excel@1.0.4/dist/table2excel.min.js"></script>
 </head>
 
-<body class="bg-page-bg font-sans min-h-screen px-4 pb-4 pt-2 sm:px-8 sm:pb-8 sm:pt-4">
+<body class="font-sans min-h-screen px-4 pb-4 pt-2 sm:px-8 sm:pb-8 sm:pt-4">
 
     <div class="max-w-7xl mx-auto bg-white shadow-2xl rounded-2xl p-6 md:p-12 border border-gray-100 transition-all duration-300">
 
@@ -179,7 +193,7 @@
                 <h1 class="text-2xl font-extrabold text-gray-800 flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 h-6 mr-1" viewBox="0 0 24 24">
                         <path fill="#e9e5f1" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" />
-                        <path fill="#480ca8" d="M14 2v6h6" />
+                        <path fill="#3a0172" d="M14 2v6h6" />
                         <path fill="#f72585" d="M16 13H8v-2h8v2zm-8 4h8v-2H8v2z" />
                     </svg>
                     DailyTrack บันทึกการปฏิบัติงานประจำวัน
@@ -548,11 +562,6 @@
             totalRows = 0; // Reset row counter
             addTableRows(ROWS_TO_ADD_BATCH); // Add the initial 10 rows
         }
-
-        // --- START: MODIFICATION 1 - Remove hardcoded duration functions ---
-        // REMOVED: generateDurationOptions and generateMinuteOptions
-        // --- END: MODIFICATION 1 ---
-
 
         // --- 4. Function to dynamically add table rows ---
         let totalRows = 0; // Global counter for total rows in the table
