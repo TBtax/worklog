@@ -1,4 +1,5 @@
 [
+
   { 
     "isHeader": true, 
     "text": "R1", 
@@ -702,6 +703,11 @@
     "isHeader": false, 
     "text": "หจก.ฮกซิ่งลึงพาณิชย์",
     "value": "หจก.ฮกซิ่งลึงพาณิชย์"
+  },
+  { 
+   "isHeader": false, 
+   "text": "-----",
+   "value": "-----"
   }
   ] 
   

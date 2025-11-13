@@ -905,9 +905,11 @@
                 const noteText = rowElement.querySelector(`[id^="note-text-"]`) ?
                     rowElement.querySelector(`[id^="note-text-"]`).value.trim() : '';
                 
-                // Only include rows where required fields (Requester, Agent, Topic, Detail, Duration, Status) are filled
-                // Note: Problem and Note are optional
-                if (requesterSelectTable && agentSelectTable && topicSelect && detailText && durationSelect && statusSelect) {
+                // **--- START MODIFICATION for flexible row saving ---**
+                // NEW LOGIC: Only include rows where core fields (Topic, Detail, Status) are filled.
+                // All other fields (Requester, Agent, Duration, Minute, Problem, Note) are optional for submission.
+                if (topicSelect && detailText && statusSelect) {
+                // **--- END MODIFICATION for flexible row saving ---**
                     data.push({
                         requester: requesterSelectTable,
                         agent: agentSelectTable,
@@ -1030,15 +1032,30 @@
         document.getElementById('logForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // 1. Collect Table Data
+            // 1. Prepare the final data object and check for required HEADER fields
+            const dateInput = document.getElementById('date');
+            const requesterSelect = document.getElementById('requester'); // ชื่อพนักงาน (Header)
+            
+            // **--- START MODIFICATION for mandatory header fields ---**
+            if (!dateInput.value) {
+                showMessage("กรุณากรอก 'วันที่บันทึก' ให้ครบถ้วน", "error");
+                return;
+            }
+            if (!requesterSelect.value) {
+                showMessage("กรุณากรอก 'ชื่อพนักงาน' ให้ครบถ้วน", "error");
+                return;
+            }
+            // **--- END MODIFICATION for mandatory header fields ---**
+
+            // 2. Collect Table Data
             const tableData = collectTableData();
             
-            // 2. Collect Leave/Training/Fieldwork status
+            // 3. Collect Leave/Training/Fieldwork status
             const leave_checkbox = document.getElementById('leave_checkbox').checked;
             const training_checkbox = document.getElementById('training_checkbox').checked;
             const fieldwork_checkbox = document.getElementById('fieldwork_checkbox').checked;
 
-            // 3. **NEW Validation**: Check if there's log entries OR any checkbox is checked
+            // 4. Validation: Check if there's log entries OR any checkbox is checked
             const isAnyLeaveChecked = leave_checkbox || training_checkbox || fieldwork_checkbox;
             const hasLogEntries = tableData.length > 0;
             if (!hasLogEntries && !isAnyLeaveChecked) {
@@ -1046,16 +1063,7 @@
                 return;
             } 
 
-            // 4. Prepare the final data object
-            // ตรวจสอบความถูกต้องของฟอร์ม (ส่วนหัว) ที่ยัง...
-            const dateInput = document.getElementById('date');
-            const requesterSelect = document.getElementById('requester'); // ชื่อพนักงาน (Header)
-            
-            if (!dateInput.value || !requesterSelect.value) {
-                showMessage("กรุณากรอก 'วันที่บันทึก' และ 'ชื่อพนักงาน' ให้ครบถ้วน", "error");
-                return;
-            }
-
+            // 5. Final Data Object Construction
             const employeeName = requesterSelect.value;
             const leave_details = document.getElementById('leave_details').value.trim();
             const training_details = document.getElementById('training_details').value.trim();
@@ -1081,10 +1089,10 @@
                 createdBy: employeeName
             };
 
-            // 5. เก็บข้อมูลที่บันทึกสำเร็จล่าสุดไว้สำหรับ Export
+            // 6. เก็บข้อมูลที่บันทึกสำเร็จล่าสุดไว้สำหรับ Export
             lastSubmissionData = data;
 
-            // 6. Send data to Make.com Webhook
+            // 7. Send data to Make.com Webhook
             try {
                 const response = await fetch(MAKE_WEBHOOK_URL, {
                     method: 'POST',
@@ -1225,7 +1233,14 @@
 
             // 5. Trigger the export
             const table2excel = new Table2Excel();
-            table2excel.export(document.getElementById('combined-export-table'), employeeName, `DailyTrack_${dateDisplay}_${employeeName}`);
+            
+            // --- START MODIFICATION 1: Custom Filename ---
+            // สร้างชื่อไฟล์ตามรูปแบบที่ผู้ใช้ต้องการ: Report_(ชื่อพนักงาน)_วันที่ (DD-MM-YYYY)
+            const fileName = `Report_${employeeName}_${dateDisplay}`;
+            
+            // **การแก้ไขเพื่อให้ชื่อไฟล์ถูกต้อง: ใช้ fileName เป็นทั้ง Sheet Name และ Filename**
+            table2excel.export(document.getElementById('combined-export-table'), fileName, fileName);
+            // --- END MODIFICATION 1: Custom Filename ---
             
             // 6. Close the modal and show final status message
             hideExportModal();

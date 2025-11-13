@@ -151,8 +151,18 @@
   },
   {
     "isHeader": false,
-    "text": "KPI / IDP / Project",
-    "value": "KPI / IDP / Project"
+    "text": "Project",
+    "value": "Project"
+  },
+  {
+    "isHeader": false,
+    "text": "IDP",
+    "value": "IDP"
+  },
+    {
+    "isHeader": false,
+    "text": "KPI",
+    "value": "KPI"
   },
   {
     "isHeader": false,
@@ -196,7 +206,7 @@
   },
     {
     "isHeader": false,
-    "text": "  ",
-    "value": "  "
+    "text": "-----",
+    "value": "-----"
   }
 ]
