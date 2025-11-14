@@ -1212,22 +1212,21 @@
 
             // 4. ข้อมูลแต่ละแถว (คอลัมน์ 1-10)
             data.logEntries.forEach((entry, index) => {
-                htmlContent += `
-                    <tr>
-                        <td style="text-align: center;">${index + 1}</td>
-                        <td>${entry.requester}</td>
-                        <td>${entry.agent}</td>
-                        <td>${entry.topic}</td>
-                        <td>${entry.detail}</td>
-                        <td>${entry.problem || '-'}</td>
-                        <td style="text-align: center;">${entry.duration}</td>
-                        <td style="text-align: center;">${entry.minuteDuration}</td>
-                        <td>${entry.status}</td>
-                        <td>${entry.note || '-'}</td>
-                        <td></td>
-                    </tr>
-                `;
-            });
+    htmlContent += `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${entry.requester}</td>
+            <td style="mso-number-format:\@">${entry.agent}</td> // <-- แก้ไขตรงนี้
+            <td>${entry.topic}</td>
+            <td>${entry.detail}</td>
+            <td>${entry.problem || '-'}</td>
+            <td style="text-align: center;">${entry.duration}</td>
+            <td style="text-align: center;">${entry.minuteDuration}</td>
+            <td>${entry.status}</td>
+            <td>${entry.note || '-'}</td>
+            <td></td>
+        </tr> `;
+});
 
             exportBody.innerHTML = htmlContent;
 
