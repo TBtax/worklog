@@ -1121,6 +1121,31 @@
                 showMessage(`เกิดข้อผิดพลาดในการบันทึกข้อมูล: ${error.message}`, "error");
             }
         });
+        // --- 7. Helper function to escape HTML characters and handle new lines for Excel export ---
+function escapeHtmlAndHandleNewLines(text) {
+    if (text === null || typeof text === 'undefined' || text === '') {
+        return '';
+    }
+    let str = String(text);
+    
+    // 1. Escape HTML entities
+    str = str.replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+
+    // 2. Convert new line characters
+    str = str.replace(/\n/g, '<br>');
+
+    // 3. CRITICAL FIX: Prepend a single quote (') to force Excel to treat the cell as TEXT, 
+    // preventing conversion of strings like 'ต.ค.68' into dates.
+    str = "'" + str;
+
+    return str;
+}
+
+
 
         // --- 9. ฟังก์ชันสำหรับเตรียมข้อมูลและ Export เป็น Excel (ปรับปรุงตามการเปลี่ยนแปลงคอลัมน์) ---
         function exportDataToExcel() {
@@ -1212,21 +1237,26 @@
 
             // 4. ข้อมูลแต่ละแถว (คอลัมน์ 1-10)
             data.logEntries.forEach((entry, index) => {
-    htmlContent += `
+    
+                // ใช้ฟังก์ชัน escapeHtmlAndHandleNewLines ซึ่งตอนนี้มีการเพิ่มเครื่องหมาย ' เข้าไปแล้ว
+                // และทำการ Fallback ให้เป็นค่าว่างหรือเครื่องหมายขีด (-) ถ้าไม่มีข้อมูล
+                const escapedDetail = escapeHtmlAndHandleNewLines(entry.detail || ''); 
+                const escapedProblem = escapeHtmlAndHandleNewLines(entry.problem || '-'); 
+                const escapedNote = escapeHtmlAndHandleNewLines(entry.note || '-');
+
+                htmlContent += `
         <tr>
             <td>${index + 1}</td>
             <td>${entry.requester}</td>
-            <td style="mso-number-format:\@">${entry.agent}</td> // <-- แก้ไขตรงนี้
+            <td style="mso-number-format:\@">${entry.agent}</td> 
             <td>${entry.topic}</td>
-            <td>${entry.detail}</td>
-            <td>${entry.problem || '-'}</td>
-            <td style="text-align: center;">${entry.duration}</td>
+            <td style="mso-number-format:\@">${escapedDetail}</td> <td style="mso-number-format:\@">${escapedProblem}</td> <td style="text-align: center;">${entry.duration}</td>
             <td style="text-align: center;">${entry.minuteDuration}</td>
             <td>${entry.status}</td>
-            <td>${entry.note || '-'}</td>
+            <td>${escapedNote}</td>
             <td></td>
         </tr> `;
-});
+            });
 
             exportBody.innerHTML = htmlContent;
 
